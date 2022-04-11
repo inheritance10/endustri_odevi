@@ -13,15 +13,14 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('orders', function (Blueprint $table) {
+        Schema::create('customer_datas', function (Blueprint $table) {
             $table->id();
-            $table->integer('user_id');
-            $table->integer('customer_data_id')->nullable();
-            $table->string('status');
+            $table->string('full_name');
+            $table->string('description')->nullable();
+            $table->string('from')->nullable();
             $table->timestamps();
         });
     }
-
     /**
      * Reverse the migrations.
      *
@@ -29,6 +28,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('orders');
+        Schema::dropIfExists('customer_datas');
     }
 };
