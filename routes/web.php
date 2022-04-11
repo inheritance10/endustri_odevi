@@ -17,6 +17,9 @@ use App\Http\Controllers\Backend\DefaultController;
 Route::get('admin',[DefaultController::class,'index'])
     ->name('nedmin.index');
 
+Route::get('deneme',[DefaultController::class,'deneme'])
+    ->name('nedmin.deneme');
+
 
 Route::get('nedmin/settings',[SettingsController::class,'index'])
     ->name('settings.index');
