@@ -2,6 +2,7 @@
 use App\Http\Controllers\Backend\SettingsController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Backend\DefaultController;
+use App\Http\Controllers\UserController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -12,6 +13,10 @@ use App\Http\Controllers\Backend\DefaultController;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+
+//deneme use route
+
 
 
 Route::get('admin',[DefaultController::class,'index'])
