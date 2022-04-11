@@ -1,0 +1,2 @@
+# endustri_odev
+ 
