@@ -12,7 +12,13 @@ class UserController extends Controller
         return view('users',compact('users'));
     }
 
-    public function UserAddValidate(Request $request){//Formdaki zorunlu alanların kontrolü
+
+
+    public function UserAdd(){//kullanıcı ekleme formuna gidiş
+        return view('useradd');
+    }
+
+    public function UserAddPost(Request $request){//kullanıcı ekleme
         $request->validate([
             'firstname'=>'required',
             'lastname'=>'required',
@@ -21,14 +27,6 @@ class UserController extends Controller
             'email'=>'required',
             'password'=>'required'
         ]);
-    }
-
-    public function UserAdd(){//kullanıcı ekleme formuna gidiş
-        return view('useradd');
-    }
-
-    public function UserAddPost(Request $request){//kullanıcı ekleme
-        $this->UserAddValidate($request);
         $user = User::create([
                 'firstname' => $request->firstname,
                 'lastname' => $request->lastname,
@@ -37,7 +35,7 @@ class UserController extends Controller
                 'email' => $request->email,
                 'password' => $request->password
                 ]);
-            if($user->create()){
+            if($user){
                 return 'kayıt başarılı';
             }else{
                 return 'kayıt başarısız';
@@ -53,7 +51,14 @@ class UserController extends Controller
     }
 
     public function UserUpdatePost(Request $request,$id){//çekilen id verisine ait kullanıcı güncelleme işlemi yapıldı
-        $this->UserAddValidate($request);
+        $request->validate([
+            'firstname'=>'required',
+            'lastname'=>'required',
+            'usertype'=>'required',
+            'name'=>'required',
+            'email'=>'required',
+            'password'=>'required'
+        ]);
 
         $user = User::where('id',$id)->update([
             'firstname' => $request->firstname,
@@ -63,13 +68,18 @@ class UserController extends Controller
             'email' => $request->email,
             'password' => $request->password
 
-            /*'firstname' => 'ALİ',
+            /*'firstname' => 'ali',
             'lastname' => 'cebeci',
             'usertype' => 1,
             'name' => 'ali',
             'email' => 'agfg@gmail.com',
             'password' => 'abc123'*/
         ]);
+        if($user){
+            return 'başarılı';
+        }else{
+            return 'başarısız';
+        }
     }
 
     public function UserDelete($id){

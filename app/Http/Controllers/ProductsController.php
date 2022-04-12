@@ -11,7 +11,12 @@ class ProductsController extends Controller
         return view('product',compact('products'));
     }
 
-    public function ProductAddValidate(Request $request){//Formdaki zorunlu alanların kontrolü
+
+    public function ProductAdd(){//ürün ekleme formuna gidiş
+        return view('productadd');
+    }
+
+    public function ProductAddPost(Request $request){//ürün ekleme
         $request->validate([
             'model_id'=>'required',
             'name'=>'required',
@@ -22,14 +27,6 @@ class ProductsController extends Controller
             'price'=>'required',
             'status'=>'required'
         ]);
-    }
-
-    public function ProductAdd(){//ürün ekleme formuna gidiş
-        return view('productadd');
-    }
-
-    public function ProductAddPost(Request $request){//ürün ekleme
-        $this->UserAddValidate($request);
         $products = Products::create([
             'model_id' => $request->model_id,
             'name' => $request->name,
@@ -40,11 +37,7 @@ class ProductsController extends Controller
             'price' => $request->price,
             'status' => $request->status
         ]);
-        if($products->create()){
-            return 'kayıt başarılı';
-        }else{
-            return 'kayıt başarısız';
-        }
+
     }
 
 
@@ -56,8 +49,16 @@ class ProductsController extends Controller
     }
 
     public function ProductUpdatePost(Request $request,$id){//çekilen id verisine ait ürün güncelleme işlemi yapıldı
-        $this->ProductAddValidate($request);
-
+        $request->validate([
+            'model_id'=>'required',
+            'name'=>'required',
+            'licence'=>'required',
+            'licence_plate'=>'required',
+            'examination_date'=>'required',
+            'credit_amount'=>'required',
+            'price'=>'required',
+            'status'=>'required'
+        ]);
         $product = Products::where('id',$id)->update([
             'model_id' => $request->model_id,
             'name' => $request->name,
