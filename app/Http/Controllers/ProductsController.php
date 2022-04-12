@@ -41,9 +41,9 @@ class ProductsController extends Controller
     }
 
 
-    //güncelleme işlemi için sayfa yönlendirilmesi ve id nin çekilmesi
-    // çekilen id ye ait ürün verilerinin güncelleme formuna aktarımı
+    // Ürün güncelleme sayfasını açma işlemi yapılıyorr.
     public function ProductUpdate($id){
+        // linkten ürünün idsini alınıyor
         $products = Products::where('id',$id)->first();
         return view('productupdate',compact('products'));
     }
