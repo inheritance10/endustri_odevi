@@ -25,6 +25,8 @@ class OrderController extends Controller
             'customer_data_id' => $request->customer_data_id,
             'status' => $request->status
          ]);
+
+         return response()->json("basarili");
     }
 
     public function OrderUpdate($id){
@@ -43,11 +45,7 @@ class OrderController extends Controller
             'customer_data_id' => $request->customer_data_id,
             'status' => $request->status
         ]);
-        if($order){
-            return 'güncelleme başarılı';
-        }else{
-            return 'güncelleme başarısız';
-        }
+       return response()->json('basarili');
     }
 
     public function OrderDelete($id){

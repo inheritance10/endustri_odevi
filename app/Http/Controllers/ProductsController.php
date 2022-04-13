@@ -8,12 +8,11 @@ class ProductsController extends Controller
 {
     public function index(){//ürünlerin listelenmesi
         $products = Products::all();
-        return view('product',compact('products'));
+        return view('backend.product.product_list',compact('products'));
     }
 
-
     public function ProductAdd(){//ürün ekleme formuna gidiş
-        return view('productadd');
+        return view('backend.product.product_add');
     }
 
     public function ProductAddPost(Request $request){//ürün ekleme
@@ -37,6 +36,7 @@ class ProductsController extends Controller
             'price' => $request->price,
             'status' => $request->status
         ]);
+        return response()->json('basarili');
 
     }
 
@@ -45,7 +45,7 @@ class ProductsController extends Controller
     public function ProductUpdate($id){
         // linkten ürünün idsini alınıyor
         $products = Products::where('id',$id)->first();
-        return view('productupdate',compact('products'));
+        return view('backend.product.product_update',compact('products'));
     }
 
     public function ProductUpdatePost(Request $request,$id){//çekilen id verisine ait ürün güncelleme işlemi yapıldı
@@ -69,6 +69,7 @@ class ProductsController extends Controller
             'price' => $request->price,
             'status' => $request->status
         ]);
+        return response()->json('basarili');
     }
 
     public function ProductSoftDelete($id){//çekilen id ye ait ürün kaydının silinmesi

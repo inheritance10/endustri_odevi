@@ -149,7 +149,7 @@ desired effect
                 <li class="header">MENÜLER</li>
                 <!-- Optionally, you can add icons to the links -->
                 <li class="active"><a href="{{route('admin.index')}}"><i class="fa fa-link"></i> <span>Anasayfa</span></a></li>
-                <li><a href="{{route('login')}}"><i class="fa-solid fa-truck"></i> <span>Ürünler</span></a></li>
+                <li><a href="{{route('product-index')}}"><i class="fa-solid fa-truck"></i> <span>Ürünler</span></a></li>
                 <li><a href="{{route('login')}}"><i class="fa-solid fa-cart-arrow-down"></i> <span>Alımlar</span></a></li>
                 <li><a href="{{route('login')}}"><i class="fa-solid fa-truck-arrow-right"></i> <span>Satışlar</span></a></li>
                 <li><a href="{{route('login')}}"><i class="fa-solid fa-file-circle-exclamation"></i> <span>Kayıtlar</span></a></li>

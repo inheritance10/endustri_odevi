@@ -35,11 +35,7 @@ class UserController extends Controller
                 'email' => $request->email,
                 'password' => $request->password
                 ]);
-            if($user){
-                return 'kayıt başarılı';
-            }else{
-                return 'kayıt başarısız';
-            }
+        return response()->json('basarili');
         }
 
 
@@ -75,11 +71,7 @@ class UserController extends Controller
             'email' => 'agfg@gmail.com',
             'password' => 'abc123'*/
         ]);
-        if($user){
-            return 'başarılı';
-        }else{
-            return 'başarısız';
-        }
+        return response()->json('basarili');
     }
 
     public function UserDelete($id){

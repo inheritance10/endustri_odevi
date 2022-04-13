@@ -1,10 +1,12 @@
 <?php
+
 use App\Http\Controllers\CustomAuthController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Backend\DefaultController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProductsController;
+use App\Http\Controllers\MainController;
+use App\Http\Controllers\Vehicle;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -16,7 +18,7 @@ use App\Http\Controllers\ProductsController;
 |
 */
 Route::middleware(['auth'])->group(function () {
-    Route::get('admin',[DefaultController::class,'index'])
+    Route::get('admin',[MainController::class,'index'])
         ->name('admin.index');
 
     /*USER ROUTE*/
@@ -24,59 +26,65 @@ Route::middleware(['auth'])->group(function () {
     Route::get('user',[UserController::class,'index'])
         ->name('user');
 
-    Route::get('useradd',[UserController::class,'UserAdd'])
-        ->name('useradd');
+    Route::get('user-add',[UserController::class,'UserAdd'])
+        ->name('user-add');
 
-    Route::post('useraddpost',[UserController::class,'UserAddPost'])
-        ->name('useraddpost');
+    Route::post('user-add-post',[UserController::class,'UserAddPost'])
+        ->name('user-add-post');
 
-    Route::get('userupdate',[UserController::class,'UserUpdate'])
-        ->name('userupdate');
+    Route::get('user-update',[UserController::class,'UserUpdate'])
+        ->name('user-update');
 
-    Route::post('userupdatepost',[UserController::class,'UserUpdatePost'])
-        ->name('userupdatepost');
+    Route::post('user-update-post',[UserController::class,'UserUpdatePost'])
+        ->name('user-update-post');
 
 
 
     /*PRODUCTS ROUTE*/
 
     Route::get('product',[ProductsController::class,'index'])
-        ->name('product');
+        ->name('product-index');
 
-    Route::get('productadd',[ProductsController::class,'ProductAdd'])
-        ->name('productadd');
+    Route::get('product-add',[ProductsController::class,'ProductAdd'])
+        ->name('product-add');
 
-    Route::post('productaddpost',[ProductsController::class,'ProductAddPost'])
-        ->name('productaddpost');
+    Route::post('product-add-post',[ProductsController::class,'ProductAddPost'])
+        ->name('product-add-post');
 
-    Route::get('productupdate',[ProductsController::class,'ProductUpdate'])
-        ->name('productupdate');
+    Route::get('product-update/{id}',[ProductsController::class,'ProductUpdate'])
+        ->name('product-update');
 
-    Route::post('productupdatepost',[ProductsController::class,'ProductUpdatePost'])
-        ->name('productupdatepost');
-
+    Route::post('product-update-post',[ProductsController::class,'ProductUpdatePost'])
+        ->name('product-update-post');
 
     /*ORDERS ROUTE*/
 
-    Route::get('order',[ProductsController::class,'index'])
+    Route::get('order',[OrderController::class,'index'])
         ->name('order');
 
-    Route::get('orderadd',[OrderController::class,'OrderAdd'])
-        ->name('orderadd');
+    Route::get('order-add',[OrderController::class,'OrderAdd'])
+        ->name('order-add');
 
-    Route::post('orderaddpost',[OrderController::class,'OrderAddPost'])
-        ->name('orderaddpost');
+    Route::post('order-add-post',[OrderController::class,'OrderAddPost'])
+        ->name('order-add-post');
 
-    Route::get('orderupdate',[OrderController::class,'OrderUpdate'])
-        ->name('orderupdate');
+    Route::get('order-update',[OrderController::class,'OrderUpdate'])
+        ->name('order-update');
 
-    Route::post('orderupdatepost',[OrderController::class,'OrderUpdatePost'])
-        ->name('orderupdatepost');
+    Route::post('order-update-post',[OrderController::class,'OrderUpdatePost'])
+        ->name('order-update-post');
 
 
-    /*VEHICLER MODELS ROUTE*/
+    /*VEHICLE ROUTE*/
+
+    Route::get('vehicle-model',[Vehicle::class,'VehicleModelIndex'])
+        ->name('vehicle-model');
+
+    Route::get('vehicle-brand',[Vehicle::class,'VehicleBrandIndex'])
+        ->name('vehicle-brand');
 
 });
+
 Route::get('/', function () {
     return redirect()->route('admin.index');
 });
@@ -85,4 +93,6 @@ Route::post('custom-login', [CustomAuthController::class, 'customLogin'])->name(
 Route::get('registration', [CustomAuthController::class, 'registration'])->name('register-user');
 Route::post('custom-registration', [CustomAuthController::class, 'customRegistration'])->name('register.custom');
 Route::get('signout', [CustomAuthController::class, 'signOut'])->name('signout');
+
+
 
