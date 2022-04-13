@@ -23,6 +23,7 @@ return new class extends Migration
             $table->timestamp('examination_date')->nullable();
             $table->double('credit_amount');
             $table->double('price');
+            $table->integer('using_status');
             $table->integer('status');
             $table->softDeletes();
             $table->timestamps();

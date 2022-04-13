@@ -1,5 +1,4 @@
 <?php
-use App\Http\Controllers\Backend\SettingsController;
 use App\Http\Controllers\CustomAuthController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Backend\DefaultController;
@@ -18,7 +17,7 @@ use App\Http\Controllers\ProductsController;
 */
 Route::middleware(['auth'])->group(function () {
     Route::get('admin',[DefaultController::class,'index'])
-        ->name('nedmin.index');
+        ->name('admin.index');
 
     /*USER ROUTE*/
 
@@ -78,18 +77,12 @@ Route::middleware(['auth'])->group(function () {
     /*VEHICLER MODELS ROUTE*/
 
 });
-Route::get('dashboard', [CustomAuthController::class, 'dashboard']);
+Route::get('/', function () {
+    return redirect()->route('admin.index');
+});
 Route::get('login', [CustomAuthController::class, 'index'])->name('login');
 Route::post('custom-login', [CustomAuthController::class, 'customLogin'])->name('login.custom');
 Route::get('registration', [CustomAuthController::class, 'registration'])->name('register-user');
 Route::post('custom-registration', [CustomAuthController::class, 'customRegistration'])->name('register.custom');
 Route::get('signout', [CustomAuthController::class, 'signOut'])->name('signout');
-
-Route::get('deneme',[DefaultController::class,'deneme'])
-    ->name('nedmin.deneme');
-
-Route::get('nedmin/settings',[SettingsController::class,'index'])
-    ->name('settings.index');
-
-
 
