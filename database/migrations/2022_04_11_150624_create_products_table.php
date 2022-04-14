@@ -18,13 +18,13 @@ return new class extends Migration
             $table->integer('model_id');
             $table->string('name');
             $table->string('description')->nullable();
-            $table->string('license');
-            $table->string('license_plate');
+            $table->string('license')->nullable();
+            $table->string('license_plate')->nullable();
             $table->timestamp('examination_date')->nullable();
-            $table->double('credit_amount');
-            $table->double('price');
-            $table->integer('using_status');
-            $table->integer('status');
+            $table->double('credit_amount')->nullable();
+            $table->double('price')->nullable();
+            $table->integer('using_status')->nullable();
+            $table->integer('status')->nullable();
             $table->softDeletes();
             $table->timestamps();
 

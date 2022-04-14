@@ -54,8 +54,11 @@ Route::middleware(['auth'])->group(function () {
     Route::get('product-update/{id}',[ProductsController::class,'ProductUpdate'])
         ->name('product-update');
 
-    Route::post('product-update-post',[ProductsController::class,'ProductUpdatePost'])
+    Route::post('product-update-post/{id}',[ProductsController::class,'ProductUpdatePost'])
         ->name('product-update-post');
+
+    Route::post('product-delete/{id}',[ProductsController::class,'ProductSoftDelete'])
+        ->name('product-delete');
 
     /*ORDERS ROUTE*/
 

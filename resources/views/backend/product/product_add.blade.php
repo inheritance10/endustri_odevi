@@ -7,7 +7,7 @@
             </div>
             <div class="box-body">
                 <p>Ürün Kayıt Formu</p>
-                <form action="">
+                <form action="" method="">
                     <div class="col-md-6">
                         <div class="form-group">
                         <label>Marka Adı</label>
@@ -66,7 +66,7 @@
                             </div>
                     </div>
                         <div class="input-group-btn">
-                            <button type="button" class="btn btn-success">Kaydet</button>
+                            <button type="submit" class="btn btn-success">Kaydet</button>
                         </div>
                 </form>
             </div>

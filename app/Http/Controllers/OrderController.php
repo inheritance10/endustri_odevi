@@ -1,8 +1,10 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Models\Logs;
 use App\Models\Orders;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class OrderController extends Controller
 {
@@ -25,6 +27,7 @@ class OrderController extends Controller
             'customer_data_id' => $request->customer_data_id,
             'status' => $request->status
          ]);
+
 
          return response()->json("basarili");
     }
