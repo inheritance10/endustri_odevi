@@ -12,13 +12,13 @@
                         <div class="form-group">
                             <label>Marka Adı</label>
                             <select class="form-control select2" style="width: 50%;">
-                                <option selected="selected">Alabama</option>
+                                <option selected="selected">marka adı</option>
                             </select>
                         </div>
                         <div class="form-group">
                             <label>Model Adı</label>
                             <select class="form-control select2" style="width: 50%;">
-                                <option selected="selected">Alabama</option>
+                                <option selected="selected">model id</option>
                             </select>
                         </div>
                         <div class="form-group">
@@ -32,27 +32,27 @@
                         </div>
                         <div class="form-group" style="width: 50%">
                             <label for="">Ruhsat</label>
-                            <input type="password" class="form-control" id="">
+                            <input type="password" class="form-control" id="" value="">
                         </div>
                         <div class="form-group">
                             <label>Kullanım Durumu</label>
                             <select class="form-control select2" style="width: 50%;">
-                                <option selected="selected">Alabama</option>
+                                <option selected="selected"></option>
                             </select>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group" style="width: 50%">
                             <label for="">Plaka</label>
-                            <input type="password" class="form-control" id="">
+                            <input type="password" class="form-control" id="" value="">
                         </div>
                         <div class="form-group" style="width: 50%">
                             <label for="">Kredi Miktarı</label>
-                            <input type="number" class="form-control" id="">
+                            <input type="number" class="form-control" id="" value="">
                         </div>
                         <div class="form-group" style="width: 50%">
                             <label for="">Ücret</label>
-                            <input type="number" class="form-control" id="">
+                            <input type="number" class="form-control" id="" value="">
                         </div>
                         <div class="form-group" style="width: 50%">
                             <label>Açıklama</label>
@@ -61,7 +61,7 @@
                         <div class="form-group">
                             <label>Durum</label>
                             <select class="form-control select2" style="width: 50%;">
-                                <option selected="selected">Alabama</option>
+                                <option selected="selected"></option>
                             </select>
                         </div>
                     </div>

@@ -57,7 +57,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('product-update-post/{id}',[ProductsController::class,'ProductUpdatePost'])
         ->name('product-update-post');
 
-    Route::post('product-delete/{id}',[ProductsController::class,'ProductSoftDelete'])
+    Route::get('product-delete/{id}',[ProductsController::class,'ProductSoftDelete'])
         ->name('product-delete');
 
     /*ORDERS ROUTE*/

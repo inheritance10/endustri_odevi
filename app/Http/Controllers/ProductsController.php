@@ -14,6 +14,7 @@ class ProductsController extends Controller
     }
 
     public function ProductAdd(){//ürün ekleme formuna gidiş
+        $products = Products::all();
         return view('backend.product.product_add');
     }
 
@@ -35,6 +36,7 @@ class ProductsController extends Controller
             'name' => $request->name,
             'license' => $request->license,
             'license_plate' => $request->license_plate,
+            'using_status' => $request->using_status,
             'examination_date' => $request->examination_date,
             'credit_amount' => $request->credit_amount,
             'price' => $request->price,
@@ -94,21 +96,18 @@ class ProductsController extends Controller
     }
 
     public function ProductSoftDelete($id){//çekilen id ye ait ürün kaydının silinmesi
-        $product = Products::where('id',$id)->delete();
 
+        $product = Products::where('id',$id)->delete();
         $logs = Logs::create([
             'IslemYapan' => Auth::user()->name,
-            'YapilanIslem' => strval($product->model_id)." id'li ürün silindi"
+            'YapilanIslem' => strval($id)." id'li ürün silindi"
         ]);
 
         if($product){
-            return 'kayıt silindi';
+            return back()->with('status','Ürün kaydı başarıyla silindi');
         }else{
-            return 'kayıt silinemedi';
+            return back()->with('status','Ürün kaydı silinemedi');
         }
-
-
-
     }
 
 
