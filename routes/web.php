@@ -60,6 +60,9 @@ Route::middleware(['auth'])->group(function () {
     Route::get('product-delete/{id}',[ProductsController::class,'ProductSoftDelete'])
         ->name('product-delete');
 
+    Route::get('product-restore/{id}',[ProductsController::class,'ProductRestore'])
+        ->name('product-restore');
+
     /*ORDERS ROUTE*/
 
     Route::get('order',[OrderController::class,'index'])
@@ -80,11 +83,19 @@ Route::middleware(['auth'])->group(function () {
 
     /*VEHICLE ROUTE*/
 
-    Route::get('vehicle-model',[Vehicle::class,'VehicleModelIndex'])
-        ->name('vehicle-model');
+    Route::get('vehicle-model-add',[Vehicle::class,'VehicleModelIndex'])
+        ->name('vehicle-model-add');
+
+    Route::get('get-models/{id}',[Vehicle::class,'GetVehicleModels'])
+        ->name('get-models');
 
     Route::get('vehicle-brand',[Vehicle::class,'VehicleBrandIndex'])
         ->name('vehicle-brand');
+
+    /*LOGS ROUTE*/
+
+    Route::get('logs',[MainController::class,'Logs'])
+        ->name('logs');
 
 });
 

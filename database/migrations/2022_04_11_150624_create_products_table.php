@@ -22,9 +22,12 @@ return new class extends Migration
             $table->string('license_plate')->nullable();
             $table->timestamp('examination_date')->nullable();
             $table->double('credit_amount')->nullable();
-            $table->double('price')->nullable();
-            $table->integer('using_status')->nullable();
-            $table->integer('status')->nullable();
+            $table->double('price');
+            $table->integer('using_status')->comment('1- Yeni Araç, 2- 2. El')->nullable();
+            $table->integer('status')->comment('1- mevcut, 2- satıldı, 3- opsiyonlandı')->nullable();
+            $table->timestamp('bought_date')->nullable();
+            $table->timestamp('sold_date')->nullable();
+            $table->integer('customer_data_id')->nullable();
             $table->softDeletes();
             $table->timestamps();
 

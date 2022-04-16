@@ -13,6 +13,13 @@ class Vehicle extends Controller
         return view('backend.vehicleModel.vehicle_model',compact('vehicle'));
     }
 
+    public function GetVehicleModels($id){
+        $vehicle = VehicleModels::where('brand_id',$id)
+            ->get(['id','name as text']);
+
+        return response()->json($vehicle);
+    }
+
 
     public function VehicleModelAddPost(Request $request){
         $request->validate([

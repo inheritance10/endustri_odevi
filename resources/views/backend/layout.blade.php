@@ -7,7 +7,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>NE CMS PANEL</title>
+    <title>Zeyrekler PANEL</title>
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <link rel="stylesheet" href="/backend/bower_components/bootstrap/dist/css/bootstrap.min.css">
@@ -148,13 +148,14 @@ desired effect
             <ul class="sidebar-menu" data-widget="tree">
                 <li class="header">MENÜLER</li>
                 <!-- Optionally, you can add icons to the links -->
-                <li class="active"><a href="{{route('admin.index')}}"><i class="fa fa-link"></i> <span>Anasayfa</span></a></li>
-                <li><a href="{{route('product-index')}}"><i class="fa-solid fa-truck"></i> <span>Ürünler</span></a></li>
-                <li><a href="{{route('login')}}"><i class="fa-solid fa-cart-arrow-down"></i> <span>Alımlar</span></a></li>
-                <li><a href="{{route('login')}}"><i class="fa-solid fa-truck-arrow-right"></i> <span>Satışlar</span></a></li>
-                <li><a href="{{route('login')}}"><i class="fa-solid fa-file-circle-exclamation"></i> <span>Kayıtlar</span></a></li>
+                <li {{--class="active"--}}><a href="{{route('admin.index')}}"><i class="fa fa-link"></i> <span>Anasayfa</span></a></li>
+                <li><a href="{{route('product-index')}}"><i class="fa-solid fa-truck"></i> <span>Araçlar</span></a></li>
+                @if(\Illuminate\Support\Facades\Auth::user()->user_type <= 0)
+                <li><a href="{{route('order')}}"><i class="fa-solid fa-truck-arrow-right"></i> <span>Satışlar</span></a></li>
+                <li><a href="{{route('logs')}}"><i class="fa-solid fa-file-circle-exclamation"></i> <span>Kayıtlar</span></a></li>
+                @endif
 
-
+{{--                <li><a href="{{route('login')}}"><i class="fa-solid fa-cart-arrow-down"></i> <span>Alımlar</span></a></li>--}}
 {{--                <li class="treeview">
                     <a href="#"><i class="fa fa-link"></i> <span>Multilevel</span>
                         <span class="pull-right-container">

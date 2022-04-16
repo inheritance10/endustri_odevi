@@ -12,6 +12,16 @@ class Products extends Model
     use SoftDeletes;
 
     protected $fillable = [
-        'model_id','name'
+        'model_id',
+        'name',
+        'description',
+        'license',
+        'license_plate',
+        'examination_date',
+        'credit_amount',
+        'price',
+        'using_status',
+        'status',
+        'sold_date',
     ];
 }

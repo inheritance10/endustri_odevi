@@ -3,10 +3,12 @@
     <section class="content-header">
         <div class="box box-primary">
             <div class="box-header with-border">
-                <h3 class="box-title">Ürünler</h3>
+                <h3 class="box-title">Araçlar</h3>
+                @if($user->user_type <= 0)
+                <a href="{{route('product-add')}}"><button class="btn btn-success">Araç Ekle</button></a>
+                @endif
             </div>
             <div class="box-body">
-                <p>Ürünler Sayfası</p>
                 @if(session()->has('status'))
                     <div class="alert alert-success">
                         <p>
@@ -14,9 +16,10 @@
                         </p>
                     </div>
                 @endif
+
                 <div class="box">
                     <div class="box-header">
-                        <h3 class="box-title">Ürünler Listesi</h3>
+                        <h3 class="box-title">Araçlar Listesi</h3>
                     </div>
                     <!-- /.box-header -->
                     <div class="box-body">
@@ -37,26 +40,25 @@
                             </thead>
                             <tbody>
                             @foreach($products as $product)
-                            <tr>
-                                <td>{{$product->name}}</td>
-                                <td>{{$product->model_id}}</td>
+                            <tr style="@if($product->status == 2) background-color: #F55353 @elseif($product->status == 3) background-color: #BAFFB4 @endif">
+                                <td>{{$product->brand_name}}</td>
+                                <td>{{$product->model_name}}</td>
                                 <td>{{$product->description}}</td>
                                 <td>{{$product->license}}</td>
                                 <td>{{$product->license_plate}}</td>
                                 <td>{{$product->examination_date}}</td>
-                                <td>{{$product->credit_amount}}</td>
+                                <td>@if($product->credit_amount == null) Belirtilmedi @else {{$product->credit_amount}}@endif</td>
                                 <td>{{$product->price}}</td>
-                                <td>{{$product->using_status}}</td>
-                                <td>{{$product->status}}</td>
-                                <td><a href="{{route('product-update',['id' => $product->id])}}"><button class="btn btn-success">Düzenle</button></a></td>
-                                <td><a href="{{route('product-delete',['id' => $product->id])}}"><button class="btn btn-success">Sil</button></a></td>
+                                <td>@if($product->using_status == 1)Yeni @else 2. El @endif</td>
+                                <td>@if($product->status == 1) Mevcut @elseif($product->status == 2) Satıldı @else Opsiyonlandı @endif</td>
+                                @if($user->user_type <= 0)<td><a href="{{route('product-update',['id' => $product->id])}}"><button class="btn btn-success">Düzenle</button></a></td>@endif
+                                @if($user->user_type <= 0)<td>@if(!$product->trashed())<a href="{{route('product-delete',['id' => $product->id])}}"><button class="btn btn-danger">Sil</button></a>@else <a href="{{route('product-restore',['id' => $product->id])}}"><button class="btn btn-info">Geri Yükle</button></a> @endif</td>@endif
                             </tr>
                             @endforeach
                             </tbody>
                         </table>
                     </div>
                     <!-- /.box-body -->
-                    <a href="{{route('product-add')}}"><button class="btn btn-success">Ürün Ekle</button></a>
                 </div>
             </div>
         </div>

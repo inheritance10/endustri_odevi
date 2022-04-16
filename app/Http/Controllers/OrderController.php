@@ -3,14 +3,43 @@
 namespace App\Http\Controllers;
 use App\Models\Logs;
 use App\Models\Orders;
+use App\Models\Products;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class OrderController extends Controller
 {
+    // Satışlar Sayfası
     public function index(){
-        $orders = Orders::all();
-        return view('order',compact('orders'));
+        // Giriş yetkisi yoksa hata veriyor
+        if (Auth::user()->user_type != 0){
+            abort(401);
+        }
+
+        //Tüm yapılan satışlar çekiliyor
+        $orders = Products::leftJoin('vehicle_models', 'model_id', 'vehicle_models.id')
+            ->leftJoin('vehicle_brands', 'brand_id', 'vehicle_brands.id')
+            ->withTrashed()
+            ->whereNotNull('sold_date')
+            ->get(['products.id',
+                'vehicle_brands.name as brand_name',
+                'vehicle_models.name as model_name',
+                'products.description',
+                'credit_amount',
+                'sold_date',
+                'price',
+            ]);
+
+        //Yalnızca bu ay yapılan satışlar çekiliyor
+        $ordersThisMonth = Products::leftJoin('vehicle_models', 'model_id', 'vehicle_models.id')
+            ->leftJoin('vehicle_brands', 'brand_id', 'vehicle_brands.id')
+            ->withTrashed()
+            ->whereNotNull('sold_date')
+            ->whereDate('sold_date', '>',Carbon::now()->startOfMonth())
+            ->get();
+
+        return view('order',compact('orders', 'ordersThisMonth'));
     }
 
     public function OrderAdd(){
