@@ -19,14 +19,6 @@ class UserController extends Controller
     }
 
     public function UserAddPost(Request $request){//kullanıcı ekleme
-        $request->validate([
-            'firstname'=>'required',
-            'lastname'=>'required',
-            'usertype'=>'required',
-            'name'=>'required',
-            'email'=>'required',
-            'password'=>'required'
-        ]);
         $user = User::create([
                 'firstname' => $request->firstname,
                 'lastname' => $request->lastname,
@@ -47,14 +39,6 @@ class UserController extends Controller
     }
 
     public function UserUpdatePost(Request $request,$id){//çekilen id verisine ait kullanıcı güncelleme işlemi yapıldı
-        $request->validate([
-            'firstname'=>'required',
-            'lastname'=>'required',
-            'usertype'=>'required',
-            'name'=>'required',
-            'email'=>'required',
-            'password'=>'required'
-        ]);
 
         $user = User::where('id',$id)->update([
             'firstname' => $request->firstname,
@@ -64,12 +48,6 @@ class UserController extends Controller
             'email' => $request->email,
             'password' => $request->password
 
-            /*'firstname' => 'ali',
-            'lastname' => 'cebeci',
-            'usertype' => 1,
-            'name' => 'ali',
-            'email' => 'agfg@gmail.com',
-            'password' => 'abc123'*/
         ]);
         return response()->json('basarili');
     }

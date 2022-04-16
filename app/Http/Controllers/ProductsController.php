@@ -116,7 +116,7 @@ class ProductsController extends Controller
     }
 
     public function ProductSoftDelete($id)
-    {//çekilen id ye ait ürün kaydının silinmesi
+    {//çekilen id ye ait araç kaydının silinmesi
 
         $product = Products::find($id);
 
@@ -133,6 +133,27 @@ class ProductsController extends Controller
             return back()->with('status', 'Ürün kaydı başarıyla silindi');
         } else {
             return back()->with('status', 'Ürün kaydı silinemedi');
+        }
+    }
+
+    public function ProductRestore($id)
+    {//çekilen id ye ait araç kaydının geri yüklenmesi
+
+        $product = Products::withTrashed()->find($id);
+
+        // Yapılan işlem kayıt altına alınıyor.
+        $model = VehicleModels::find($product->model_id);
+        $brand = VehicleBrands::find($model->brand_id);
+        Logs::create([
+            'IslemYapan' => Auth::user()->name,
+            'YapilanIslem' =>  $brand->name. " marka " . $model->name . " model aracı geri yükledi."
+        ]);
+
+
+        if ($product->restore()) {
+            return back()->with('status', 'Ürün kaydı başarıyla geri yüklendi');
+        } else {
+            return back()->with('status', 'Ürün kaydı geri yüklenemedi');
         }
     }
 

@@ -1,5 +1,6 @@
 <?php
 namespace App\Http\Controllers;
+use App\Models\Logs;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
@@ -21,6 +22,12 @@ class CustomAuthController extends Controller
 
         $credentials = $request->only('email', 'password');
         if (Auth::attempt($credentials)) {
+
+            Logs::create([
+                'IslemYapan' => Auth::user()->name,
+                'YapilanIslem' =>  "Kullanıcı giriş yaptı."
+            ]);
+
             return redirect()->intended('admin')
                 ->withSuccess('Signed in');
         }
@@ -66,8 +73,15 @@ class CustomAuthController extends Controller
     }
 
     public function signOut() {
+        $user_name = Auth::user()->name;
+
         Session::flush();
         Auth::logout();
+
+        Logs::create([
+            'IslemYapan' => $user_name,
+            'YapilanIslem' =>  "Kullanıcı çıkış yaptı."
+        ]);
 
         return Redirect('login');
     }
