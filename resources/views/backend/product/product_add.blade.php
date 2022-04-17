@@ -19,8 +19,6 @@
                             <option value="{{$brand->id}}">{{$brand->name}}</option>
                             @endforeach
                         </select>
-                            <a href="/vehicle-brand-add" class="btn btn-success"> Marka Ekle</a>
-
                         </div>
                         <div class="form-group">
                         <label>Model Adı</label>

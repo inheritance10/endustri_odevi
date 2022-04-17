@@ -17,6 +17,10 @@ use App\Http\Controllers\Vehicle;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+
+
+
 Route::middleware(['auth'])->group(function () {
     Route::get('admin',[MainController::class,'index'])
         ->name('admin.index');
@@ -74,23 +78,29 @@ Route::middleware(['auth'])->group(function () {
     Route::post('order-add-post',[OrderController::class,'OrderAddPost'])
         ->name('order-add-post');
 
-    Route::get('order-update',[OrderController::class,'OrderUpdate'])
-        ->name('order-update');
-
-    Route::post('order-update-post',[OrderController::class,'OrderUpdatePost'])
-        ->name('order-update-post');
 
 
     /*VEHICLE ROUTE*/
 
-    Route::get('vehicle-model-add',[Vehicle::class,'VehicleModelIndex'])
-        ->name('vehicle-model-add');
+
+    Route::get('vehicle',[Vehicle::class,'index'])
+        ->name('vehicle');
+
+    Route::post('model-add-post',[Vehicle::class,'VehicleModelAddPost'])
+        ->name('model-add-post');
+
+    Route::get('model-delete/{id}',[Vehicle::class,'VehicleModelDelete'])
+        ->name('model-delete');
+
+
+    Route::post('brand-add-post',[Vehicle::class,'VehicleBrandAddPost'])
+        ->name('brand-add-post');
+
+    Route::get('brand-delete/{id}',[Vehicle::class,'VehicleBrandDelete'])
+        ->name('brand-delete');
 
     Route::get('get-models/{id}',[Vehicle::class,'GetVehicleModels'])
         ->name('get-models');
-
-    Route::get('vehicle-brand',[Vehicle::class,'VehicleBrandIndex'])
-        ->name('vehicle-brand');
 
     /*LOGS ROUTE*/
 

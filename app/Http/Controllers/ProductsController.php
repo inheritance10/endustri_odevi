@@ -61,7 +61,6 @@ class ProductsController extends Controller
             'credit_amount' => $request->credit_amount,
             'price' => $request->price,
             'status' => $request->status
-
         ]);
 
         // Yapılan işlem kayıt altına alınıyor.
@@ -82,9 +81,29 @@ class ProductsController extends Controller
     public function ProductUpdate($id)
     {
         // linkten ürünün idsini alınıyor
+
         $brands = VehicleBrands::all();
-        $products = Products::where('id', $id)->first();
-        return view('backend.product.product_update', compact('products', 'brands'));
+        $models = VehicleModels::all();
+
+        $products = Products::leftJoin('vehicle_models', 'model_id', 'vehicle_models.id')
+            ->leftJoin('vehicle_brands', 'brand_id', 'vehicle_brands.id')
+            ->where('products.id', $id)
+            ->withTrashed()
+            ->get(['products.id',
+                'vehicle_brands.name as brand_name',
+                'vehicle_models.name as model_name',
+                'model_id',
+                'products.description',
+                'license',
+                'license_plate',
+                'examination_date',
+                'credit_amount',
+                'price',
+                'using_status',
+                'deleted_at',
+                'status',
+            ])[0];
+        return view('backend.product.product_update', compact('products', 'brands','models'));
     }
 
     public function ProductUpdatePost(Request $request, $id)
@@ -101,7 +120,6 @@ class ProductsController extends Controller
             'credit_amount' => $request->credit_amount,
             'price' => $request->price,
             'status' => $request->status
-
         ]);
 
         // Yapılan işlem kayıt altına alınıyor.
@@ -112,7 +130,7 @@ class ProductsController extends Controller
             'YapilanIslem' =>  $brand->name. " marka " . $model->name . " model araç üzerinde düzenleme yaptı."
         ]);
 
-        return response()->json('basarili');
+        return redirect('product');
     }
 
     public function ProductSoftDelete($id)

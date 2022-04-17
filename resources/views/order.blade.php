@@ -5,6 +5,7 @@
             <div class="box-header with-border">
                 <h3 class="box-title">Satışlar</h3>
             </div>
+            <a href="{{route('order-add')}}" class="btn btn-success">Sipariş Ekle</a>
             <div class="box-body">
                 @if(session()->has('status'))
                     <div class="alert alert-success">

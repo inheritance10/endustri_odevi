@@ -1,8 +1,10 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Models\Logs;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Validator;
 
 class UserController extends Controller
@@ -11,8 +13,6 @@ class UserController extends Controller
         $users = User::all();
         return view('users',compact('users'));
     }
-
-
 
     public function UserAdd(){//kullanıcı ekleme formuna gidiş
         return view('useradd');
