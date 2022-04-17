@@ -9,16 +9,16 @@ use Validator;
 
 class UserController extends Controller
 {
-    public function index(){//kullanıcıların listelenmesi
+    public function index(){
         $users = User::all();
         return view('users',compact('users'));
     }
 
-    public function UserAdd(){//kullanıcı ekleme formuna gidiş
+    public function UserAdd(){
         return view('useradd');
     }
 
-    public function UserAddPost(Request $request){//kullanıcı ekleme
+    public function UserAddPost(Request $request){
         $user = User::create([
                 'firstname' => $request->firstname,
                 'lastname' => $request->lastname,
@@ -31,14 +31,13 @@ class UserController extends Controller
         }
 
 
-    //güncelleme işlemi için sayfa yönlendirilmesi ve id nin çekilmesi
-    // çekilen id ye ait kullanıcının verilerinin güncelleme formuna aktarımı
+
     public function UserUpdate($id){
         $user = User::where('id',$id)->first();
         return view('userupdate',compact('user'));
     }
 
-    public function UserUpdatePost(Request $request,$id){//çekilen id verisine ait kullanıcı güncelleme işlemi yapıldı
+    public function UserUpdatePost(Request $request,$id){
 
         $user = User::where('id',$id)->update([
             'firstname' => $request->firstname,

@@ -24,6 +24,7 @@ class ProductsController extends Controller
         if (Auth::user()->user_type <= 0){
             $products = $products->withTrashed();
         }
+        //Listelenecek veriler çekildi.
         $products = $products->get(['products.id',
                 'vehicle_brands.name as brand_name',
                 'vehicle_models.name as model_name',
@@ -37,6 +38,7 @@ class ProductsController extends Controller
                 'deleted_at',
                 'status',
             ]);
+        //çekilen veriler sayfaya gönderildi.
         return view('backend.product.product_list', compact('products', 'user'));
     }
 
@@ -71,8 +73,8 @@ class ProductsController extends Controller
             'YapilanIslem' =>  $brand->name. " marka " . $model->name . " model yeni araç eklendi."
         ]);
 
-        // İşlem olumlu sonuçlandığında dönüş yapılıyor
-        return response()->json('basarili');
+        // İşlem olumlu sonuçlandığında araçlar sayfasına dönüş yapılıyor
+        return redirect()->route('product');
 
     }
 
@@ -84,7 +86,7 @@ class ProductsController extends Controller
 
         $brands = VehicleBrands::all();
         $models = VehicleModels::all();
-
+        //Tablolar birleştirilip verilerin çekilmesi sağlandı.
         $products = Products::leftJoin('vehicle_models', 'model_id', 'vehicle_models.id')
             ->leftJoin('vehicle_brands', 'brand_id', 'vehicle_brands.id')
             ->where('products.id', $id)
@@ -103,6 +105,8 @@ class ProductsController extends Controller
                 'deleted_at',
                 'status',
             ])[0];
+
+        //çekilen veriler sayfaya gönderildi
         return view('backend.product.product_update', compact('products', 'brands','models'));
     }
 
@@ -130,7 +134,7 @@ class ProductsController extends Controller
             'YapilanIslem' =>  $brand->name. " marka " . $model->name . " model araç üzerinde düzenleme yaptı."
         ]);
 
-        return redirect('product');
+        return redirect()->route('product');
     }
 
     public function ProductSoftDelete($id)
@@ -146,7 +150,7 @@ class ProductsController extends Controller
             'YapilanIslem' =>  $brand->name. " marka " . $model->name . " model aracı sildi."
         ]);
 
-
+        //silinme işleminin başarılı ya da başarısız olduğu durumda kullanıcı bilgilendirme sağlandı
         if ($product->delete()) {
             return back()->with('status', 'Ürün kaydı başarıyla silindi');
         } else {
@@ -167,7 +171,7 @@ class ProductsController extends Controller
             'YapilanIslem' =>  $brand->name. " marka " . $model->name . " model aracı geri yükledi."
         ]);
 
-
+        //Geri yükleme işleminin başarılı ya da başarısız olduğu durumda kullanıcı bilgilendirme sağlandı
         if ($product->restore()) {
             return back()->with('status', 'Ürün kaydı başarıyla geri yüklendi');
         } else {

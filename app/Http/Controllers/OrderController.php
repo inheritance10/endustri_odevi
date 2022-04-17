@@ -42,10 +42,11 @@ class OrderController extends Controller
             ->whereDate('sold_date', '>',Carbon::now()->startOfMonth())
             ->get();
 
+        //orders ,ordersThisMonth verileri sayfaya gönderildi
         return view('order',compact('orders', 'ordersThisMonth'));
     }
 
-    public function OrderAdd(){
+    public function OrderAdd(){//Tablolar birleştirilerek verilerin çekilme işlemi yapıldı.
         $products = Products::leftJoin('vehicle_models', 'model_id', 'vehicle_models.id')
             ->leftJoin('vehicle_brands', 'brand_id', 'vehicle_brands.id')
             ->withTrashed()
@@ -56,48 +57,49 @@ class OrderController extends Controller
             'vehicle_models.name as model_name',
             'price',
             ]);
+
+        //products da ki verilerin order_add sayfasına gönderimi yapıldı
         return view('order_add',compact('products'));
     }
 
     public function OrderAddPost(Request $request){
 
 
+        //Form üzerinde gelen product_id ye göre Araçlar tablosundan $product değişkenine veri çekildi.
         $product = Products::find($request->product_id);
 
-        $model_id = $product->model_id;
+        $model_id = $product->model_id; //Araçlar tablosundan gelen verilerin içerisinden model_id çekildi.
 
+        //çekilen model_id ye göre where sorgusuyla gelen ilk veriyi $model değişkenine çekildi.
         $model = VehicleModels::where('id' ,'=', $model_id)->first();
+
+        //Model değişkeni üzerinden marka id ye ulaşıp where sorgusu üzerinden gelen ilk veriyi $brand değişkenine çekildi.
         $brand = VehicleBrands::where('id' ,'=', $model->brand_id)->first();
 
-         $product->update([
+         $product->update([//satış tarihi güncellenmesi yapıldı.
             'sold_date' => Carbon::now()
         ]);
 
 
-         $customer = CustomerDatas::create([
+         $customer = CustomerDatas::create([//Müşteri verileri tablosuna isim ve açıklama kaydı yapıldı.
             'full_name' => $request->full_name,
             'description' => $request->description
         ]);
 
 
-
-         Orders::create([
+         Orders::create([//Siparişler tablosuna siparişi gerçekleştiren user_id,Hangi araç olduğu product_id,hangi müşteriye ait olduğu customer_data_id alanına kaydı yapıldı.
                 'user_id' => Auth::id(),
                 'product_id' => $product->id,
                 'customer_data_id' => $customer->id
          ]);
 
-         Logs::create([
+         Logs::create([//Bu işlemlerin Hangi kullanıcı tarafından yapıldığı ve yapılan işlemin ne olduğu Logs tablosuna kayıt edildi.
              'IslemYapan' => Auth::user()->name,
              'YapilanIslem' => $brand->name." ".$model->name.' model araç satıldı'
          ]);
 
-         return back();
+         return back();//Sayfaya geri dönüş sağlandı.
     }
 
-    public function OrderUpdate($id){
-        $order = Products::where('id',$id)->first();
-        return view('orderupdate',compact('order'));
-    }
 
 }

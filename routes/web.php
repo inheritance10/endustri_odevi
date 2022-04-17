@@ -22,7 +22,7 @@ use App\Http\Controllers\Vehicle;
 
 
 Route::middleware(['auth'])->group(function () {
-    Route::get('admin',[MainController::class,'index'])
+    Route::get('admin',[ProductsController::class,'index'])
         ->name('admin.index');
 
     /*USER ROUTE*/

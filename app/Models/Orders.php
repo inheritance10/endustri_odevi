@@ -13,7 +13,7 @@ class Orders extends Model
         'user_id','customer_data_id','status'
     ];
 
-    public function order_items()
+    public function order_items()//Tablo birleştirilme işlemi yapıldı..
     {
         return $this->hasMany(OrderItems::class,'order_id');
     }
