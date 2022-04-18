@@ -113,7 +113,7 @@ desired effect
                                     <a href="#" class="btn btn-default btn-flat">Profil Düzenle</a>
                                 </div>--}}
                                 <div class="pull-right">
-                                    <a href="#" class="btn btn-default btn-flat">Çıkış</a>
+                                    <a href="{{route('signout')}}" class="btn btn-default btn-flat">Çıkış</a>
                                 </div>
                             </li>
                         </ul>
@@ -151,8 +151,9 @@ desired effect
                 <li {{--class="active"--}}><a href="{{route('admin.index')}}"><i class="fa fa-link"></i> <span>Anasayfa</span></a></li>
                 <li><a href="{{route('product-index')}}"><i class="fa-solid fa-truck"></i> <span>Araçlar</span></a></li>
                 @if(\Illuminate\Support\Facades\Auth::user()->user_type <= 0)
-                <li><a href="{{route('order')}}"><i class="fa-solid fa-truck-arrow-right"></i> <span>Satışlar</span></a></li>
-                <li><a href="{{route('logs')}}"><i class="fa-solid fa-file-circle-exclamation"></i> <span>Kayıtlar</span></a></li>
+                    <li><a href="{{route('order')}}"><i class="fa-solid fa-truck-arrow-right"></i> <span>Satışlar</span></a></li>
+                    <li><a href="{{route('logs')}}"><i class="fa-solid fa-file-circle-exclamation"></i> <span>Kayıtlar</span></a></li>
+                    <li><a href="{{route('user')}}"><i class="fa-solid fa-user"></i> <span>Kullanıcılar</span></a></li>
                 @endif
 
 {{--                <li><a href="{{route('login')}}"><i class="fa-solid fa-cart-arrow-down"></i> <span>Alımlar</span></a></li>--}}

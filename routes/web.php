@@ -36,11 +36,14 @@ Route::middleware(['auth'])->group(function () {
     Route::post('user-add-post',[UserController::class,'UserAddPost'])
         ->name('user-add-post');
 
-    Route::get('user-update',[UserController::class,'UserUpdate'])
+    Route::get('user-update/{id}',[UserController::class,'UserUpdate'])
         ->name('user-update');
 
-    Route::post('user-update-post',[UserController::class,'UserUpdatePost'])
+    Route::post('user-update-post/{id}',[UserController::class,'UserUpdatePost'])
         ->name('user-update-post');
+
+    Route::get('user-delete/{id}',[UserController::class,'UserDelete'])
+        ->name('user-delete');
 
 
 
