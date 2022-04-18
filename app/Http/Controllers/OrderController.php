@@ -49,7 +49,6 @@ class OrderController extends Controller
     public function OrderAdd(){//Tablolar birleştirilerek verilerin çekilme işlemi yapıldı.
         $products = Products::leftJoin('vehicle_models', 'model_id', 'vehicle_models.id')
             ->leftJoin('vehicle_brands', 'brand_id', 'vehicle_brands.id')
-            ->withTrashed()
             ->whereNull('sold_date')
             ->get([
             'products.id',
@@ -67,7 +66,6 @@ class OrderController extends Controller
 
         //Form üzerinde gelen product_id ye göre Araçlar tablosundan $product değişkenine veri çekildi.
         $product = Products::find($request->product_id);
-
         $model_id = $product->model_id; //Araçlar tablosundan gelen verilerin içerisinden model_id çekildi.
 
         //çekilen model_id ye göre where sorgusuyla gelen ilk veriyi $model değişkenine çekildi.

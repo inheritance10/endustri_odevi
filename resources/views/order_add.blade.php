@@ -41,7 +41,7 @@
                         </div>
                     </div>
                     <div class="input-group-btn">
-                        <button type="submit" class="btn btn-success" style="position: absolute; top: 230px;left: 0;">Siparişi Tamamla</button>
+                        <button type="submit" class="btn btn-success" style="position: absolute; top: 150px;left: 0;">Siparişi Tamamla</button>
                     </div>
                 </form>
             </div>

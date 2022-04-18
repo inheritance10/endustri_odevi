@@ -28,7 +28,6 @@ class Vehicle extends Controller
             'brand_id' => $request->brand_id,
             'name' => $request->name,
             'year' => $request->year,
-            'capacity' => $request->capacity
         ]);
 
         $brand = VehicleBrands::find($request->brand_id);//Form üzerinden gelen brand_id alanına göre marka verisi çekildi.
