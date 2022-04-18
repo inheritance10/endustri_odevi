@@ -64,16 +64,8 @@
                                     <label for="">Yıl</label>
                                     <input type="number" class="form-control" id="" name="year">
                                 </div>
-                                <div class="form-group">
-                                    <label for="">Kapasite</label>
-                                    <input type="text" class="form-control" id="" name="capacity">
-                                </div>
-                                <div class="form-group" style=" ">
-                                    <label>Açıklama</label>
-                                    <textarea class="form-control" rows="3" placeholder="Enter ..." name="description"></textarea>
-                                </div>
                             </div>
-                            <div class="col-md-3" style="margin-top: 285px">
+                            <div class="col-md-3" style="margin-top: 105px">
                                 <div class="input-group-btn">
                                     <button type="submit" class="btn btn-success">Model Ekle</button>
                                 </div>

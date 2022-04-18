@@ -27,6 +27,7 @@
                                 <th>Model Adı</th>
                                 <th>Satış tarihi</th>
                                 <th>Kredi Miktarı</th>
+                                <th>Müşteri Adı</th>
                                 <th>Ücret</th>
                             </tr>
                             </thead>
@@ -37,6 +38,7 @@
                                     <td>{{$order->model_name}}</td>
                                     <td>{{$order->sold_date}}</td>
                                     <td>{{$order->credit_amount}}</td>
+                                    <td></td>
                                     <td>{{$order->price}}</td>
                                 </tr>
                             @endforeach

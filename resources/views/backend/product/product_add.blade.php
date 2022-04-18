@@ -20,12 +20,25 @@
                             @endforeach
                         </select>
                         </div>
-                        <div class="form-group">
-                        <label>Model Adı</label>
-                        <select class="form-control select2" id="model" name="model_id" style=" ;">
-                            <option selected="selected" disabled >Model Seçiniz</option>
-                        </select>
-                            <a href="/vehicle-model-add" class="btn btn-success"> Model Ekle</a>
+                        <div class="row">
+                            <div class="col-md-8">
+                                <div class="form-group">
+                                    <label>Model Adı</label>
+                                    <select class="form-control select2" id="model" name="model_id" style=" ;">
+                                        <option selected="selected" disabled >Model Seçiniz</option>
+                                    </select>
+                                    <a href="/vehicle" class="btn btn-success"> Model Ekle</a>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Çekiş Tipi</label>
+                                    <select class="form-control select2" name="capacity" style=" ;">
+                                        <option value="2WD" >2WD</option>
+                                        <option value="4WD" >4WD</option>
+                                    </select>
+                                </div>
+                            </div>
                         </div>
                         <div class="form-group" style=" ">
                             <label for="">Ruhsat</label>
@@ -52,6 +65,10 @@
                         <div class="form-group" style=" ">
                                 <label for="">Plaka</label>
                                 <input type="text" class="form-control" id="license_plate" name="license_plate">
+                            </div>
+                        <div class="form-group" style=" ">
+                                <label for="">Saat</label>
+                                <input type="text" class="form-control" id="license_plate" name="hour">
                             </div>
                         <div class="form-group" style=" ">
                                 <label for="">Kredi Miktarı</label>

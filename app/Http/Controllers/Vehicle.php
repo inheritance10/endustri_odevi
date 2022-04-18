@@ -27,7 +27,6 @@ class Vehicle extends Controller
         VehicleModels::create([
             'brand_id' => $request->brand_id,
             'name' => $request->name,
-            'description' => $request->description,
             'year' => $request->year,
             'capacity' => $request->capacity
         ]);

@@ -18,6 +18,9 @@ return new class extends Migration
             $table->integer('model_id');
             $table->string('name');
             $table->string('description')->nullable();
+            $table->string('capacity');
+            $table->string('year');
+            $table->integer('hour');
             $table->string('license')->nullable();
             $table->string('license_plate')->nullable();
             $table->timestamp('examination_date')->nullable();

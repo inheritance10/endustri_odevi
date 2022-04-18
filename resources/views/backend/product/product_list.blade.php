@@ -16,7 +16,47 @@
                         </p>
                     </div>
                 @endif
-
+                    <form  action="{{route('product-index')}}">
+                <div class="row">
+                    <div class="col-md-1">
+                    <div class="form-group">
+                        <label>Kullanım Durumu</label>
+                        <select class="form-control select2" name="using_status" style=" ;">
+                            <option value="0">Hepsi</option>
+                            <option value="1">Yeni</option>
+                            <option value="2">2.El</option>
+                        </select>
+                    </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <label >Marka Adı</label>
+                            <select class="form-control select2" id="name" name="name" style=" ;">
+                                <option selected="selected" value="0" >Hepsi</option>
+                                @foreach($brands as $brand)
+                                    <option value="{{$brand->id}}">{{$brand->name}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-1">
+                        <div class="form-group">
+                            <label>Durum</label>
+                            <select class="form-control select2" name="status" style=" ;">
+                                <option value="0">Hepsi</option>
+                                <option value="1">Mevcut</option>
+                                <option value="2">Satıldı</option>
+                                <option value="3">Opsiyonlandı</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-1">
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-info" style="margin-top: 1rem">Filtrele</button>
+                        </div>
+                    </div>
+                </div>
+                    </form>
                 <div class="box">
                     <div class="box-header">
                         <h3 class="box-title">Araçlar Listesi</h3>
@@ -28,6 +68,9 @@
                             <tr>
                                 <th>Marka Adı</th>
                                 <th>Model Adı</th>
+                                <th>Yıl</th>
+                                <th>Çekiş Gücü</th>
+                                <th>Saat</th>
                                 <th>Açıklama</th>
                                 <th>Ruhsat</th>
                                 <th>Plaka</th>
@@ -43,6 +86,9 @@
                             <tr style="@if($product->status == 2) background-color: #F55353 @elseif($product->status == 3) background-color: #BAFFB4 @endif">
                                 <td>{{$product->brand_name}}</td>
                                 <td>{{$product->model_name}}</td>
+                                <td>{{$product->year}}</td>
+                                <td>{{$product->capacity}}</td>
+                                <td>{{$product->hour}}</td>
                                 <td>{{$product->description}}</td>
                                 <td>{{$product->license}}</td>
                                 <td>{{$product->license_plate}}</td>
@@ -66,8 +112,19 @@
 @endsection
 
 @section('css')
+    <!-- Select2 -->
+    <link rel="stylesheet" href="backend/bower_components/select2/dist/css/select2.min.css">
+
+
 @endsection
 
 @section('js')
+    <!-- Select2 -->
+    <script src="backend/bower_components/select2/dist/js/select2.full.min.js"></script>
+
+    <script>
+        $('.select2').select2()
+
+    </script>
 @endsection
 

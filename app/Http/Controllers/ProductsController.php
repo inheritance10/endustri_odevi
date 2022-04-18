@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Auth;
 class ProductsController extends Controller
 {
     // Araçların listelenmesi
-    public function index()
+    public function index(Request $request)
     {
         // giriş yapmış olan kullanıcıların bilgileri
         $user = Auth::user();
@@ -24,11 +24,26 @@ class ProductsController extends Controller
         if (Auth::user()->user_type <= 0){
             $products = $products->withTrashed();
         }
+
+        if (!empty($request->using_status)){
+            $products->where('using_status', $request->using_status);
+        }
+        if (!empty($request->name)){
+            $products->where('brand_id', $request->name);
+        }
+        if (!empty($request->status)){
+            $products->where('status', $request->status);
+        }
+        $brands = VehicleBrands::all();
+
         //Listelenecek veriler çekildi.
         $products = $products->get(['products.id',
                 'vehicle_brands.name as brand_name',
                 'vehicle_models.name as model_name',
                 'products.description',
+                'capacity',
+                'year',
+                'hour',
                 'license',
                 'license_plate',
                 'examination_date',
@@ -39,7 +54,7 @@ class ProductsController extends Controller
                 'status',
             ]);
         //çekilen veriler sayfaya gönderildi.
-        return view('backend.product.product_list', compact('products', 'user'));
+        return view('backend.product.product_list', compact('products', 'user', 'brands'));
     }
 
     // Araç ekleme formu
@@ -56,6 +71,8 @@ class ProductsController extends Controller
         Products::create([
             'model_id' => $request->model_id,
             'name' => $request->name,
+            'capacity' => $request->capacity,
+            'hour' => $request->hour,
             'license' => $request->license,
             'license_plate' => $request->license_plate,
             'using_status' => $request->using_status,
@@ -74,7 +91,7 @@ class ProductsController extends Controller
         ]);
 
         // İşlem olumlu sonuçlandığında araçlar sayfasına dönüş yapılıyor
-        return redirect()->route('product');
+        return redirect()->route('product-index');
 
     }
 
@@ -95,6 +112,8 @@ class ProductsController extends Controller
                 'vehicle_brands.name as brand_name',
                 'vehicle_models.name as model_name',
                 'model_id',
+                'capacity',
+                'hour',
                 'products.description',
                 'license',
                 'license_plate',
@@ -118,6 +137,9 @@ class ProductsController extends Controller
         $product->update([
             'model_id' => $request->model_id,
             'name' => $request->name,
+            'capacity' => $request->capacity,
+            'description' => $request->description,
+            'hour' => $request->hour,
             'license' => $request->license,
             'license_plate' => $request->license_plate,
             'examination_date' => $request->examination_date,
@@ -134,7 +156,7 @@ class ProductsController extends Controller
             'YapilanIslem' =>  $brand->name. " marka " . $model->name . " model araç üzerinde düzenleme yaptı."
         ]);
 
-        return redirect()->route('product');
+        return redirect()->route('product-index');
     }
 
     public function ProductSoftDelete($id)

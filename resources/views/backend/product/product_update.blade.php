@@ -20,12 +20,25 @@
                                 @endforeach
                             </select>
                         </div>
-                        <div class="form-group">
-                            <label>Model Adı</label>
-                            <input type="text" hidden id="hidden_model_id" value="{{$products->model_id}}">
-                            <select class="form-control select2" id="model" name="model_id" style=" ;">
-                                <option selected="selected" disabled >Model Seçiniz</option>
-                            </select>
+                        <div class="row">
+                        <div class="col-md-8">
+                            <div class="form-group">
+                                <label>Model Adı</label>
+                                <input type="text" hidden id="hidden_model_id" value="{{$products->model_id}}">
+                                <select class="form-control select2" id="model" name="model_id" style=" ;">
+                                    <option selected="selected" disabled >Model Seçiniz</option>
+                                </select>
+                            </div>
+                        </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Çekiş Tipi</label>
+                                    <select class="form-control select2" name="capacity" style=" ;">
+                                        <option @if($products->capacity == "2WD") selected @endif value="2WD" >2WD</option>
+                                        <option @if($products->capacity == "4WD") selected @endif value="4WD" >4WD</option>
+                                    </select>
+                                </div>
+                            </div>
                         </div>
                         <div class="form-group" style=" ">
                             <label for="">Ruhsat</label>
@@ -53,6 +66,11 @@
                             <label for="">Plaka</label>
                             <input type="text" class="form-control" id="license_plate" name="license_plate" value="{{$products->license_plate}}">
                         </div>
+                        <div class="form-group" style=" ">
+                            <label for="">Saat</label>
+                            <input type="text" class="form-control" id="license_plate" name="hour" value="{{$products->hour}}">
+                        </div>
+
                         <div class="form-group" style=" ">
                             <label for="">Kredi Miktarı</label>
                             <input type="number" class="form-control" id="credit_amount" name="credit_amount" value="{{$products->credit_amount}}">
