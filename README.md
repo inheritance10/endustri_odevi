@@ -1,2 +1,2 @@
-# endustri_odev
+# stoktakipotomasyonu
  
