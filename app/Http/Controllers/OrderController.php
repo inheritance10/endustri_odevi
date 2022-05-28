@@ -23,15 +23,19 @@ class OrderController extends Controller
         //Tüm yapılan satışlar çekiliyor
         $orders = Products::leftJoin('vehicle_models', 'model_id', 'vehicle_models.id')
             ->leftJoin('vehicle_brands', 'brand_id', 'vehicle_brands.id')
+            ->leftJoin('orders', 'product_id', 'products.id')
+            ->leftJoin('customer_datas', 'customer_datas.id', 'customer_data_id')
             ->withTrashed()
             ->whereNotNull('sold_date')
             ->get(['products.id',
+                'full_name',
                 'vehicle_brands.name as brand_name',
                 'vehicle_models.name as model_name',
                 'products.description',
                 'credit_amount',
                 'sold_date',
                 'price',
+                'orders.customer_data_id'
             ]);
 
         //Yalnızca bu ay yapılan satışlar çekiliyor
@@ -46,6 +50,28 @@ class OrderController extends Controller
         return view('order',compact('orders', 'ordersThisMonth'));
     }
 
+    public function customerDatas($id){
+
+        $customer_data = CustomerDatas::leftJoin('orders', 'orders.customer_data_id', 'customer_datas.id')
+            ->leftJoin('products', 'products.id', 'orders.product_id')
+            ->leftJoin('vehicle_models', 'model_id', 'vehicle_models.id')
+            ->leftJoin('vehicle_brands', 'brand_id', 'vehicle_brands.id')
+            ->find($id);
+        $desc = CustomerDatas::find($id)->description;
+
+        $products = Products::leftJoin('vehicle_models', 'model_id', 'vehicle_models.id')
+            ->leftJoin('vehicle_brands', 'brand_id', 'vehicle_brands.id')
+            ->get([
+                'products.id',
+                'vehicle_brands.id as vid',
+                'vehicle_brands.name as brand_name',
+                'vehicle_models.name as model_name',
+                'price',
+            ]);
+
+        return view('customer_datas', compact('customer_data', 'products', 'desc'));
+    }
+
     public function OrderAdd(){//Tablolar birleştirilerek verilerin çekilme işlemi yapıldı.
         $products = Products::leftJoin('vehicle_models', 'model_id', 'vehicle_models.id')
             ->leftJoin('vehicle_brands', 'brand_id', 'vehicle_brands.id')
@@ -55,6 +81,7 @@ class OrderController extends Controller
             'vehicle_brands.name as brand_name',
             'vehicle_models.name as model_name',
             'price',
+            'license_plate'
             ]);
 
         //products da ki verilerin order_add sayfasına gönderimi yapıldı
@@ -62,8 +89,8 @@ class OrderController extends Controller
     }
 
     public function OrderAddPost(Request $request){
-
-
+        if (str_contains($request->phone, '_'))
+            return back()->with('status', 'Telefon numarasını eksik girdiniz.');
         //Form üzerinde gelen product_id ye göre Araçlar tablosundan $product değişkenine veri çekildi.
         $product = Products::find($request->product_id);
         $model_id = $product->model_id; //Araçlar tablosundan gelen verilerin içerisinden model_id çekildi.
@@ -75,13 +102,16 @@ class OrderController extends Controller
         $brand = VehicleBrands::where('id' ,'=', $model->brand_id)->first();
 
          $product->update([//satış tarihi güncellenmesi yapıldı.
-            'sold_date' => Carbon::now()
+            'sold_date' => Carbon::createFromFormat('d/m/Y',$request->sold_date),
+             'status' => 2
         ]);
 
 
          $customer = CustomerDatas::create([//Müşteri verileri tablosuna isim ve açıklama kaydı yapıldı.
             'full_name' => $request->full_name,
-            'description' => $request->description
+            'description' => $request->description,
+            'phone' => $request->phone,
+            'address' => $request->address,
         ]);
 
 
@@ -96,7 +126,7 @@ class OrderController extends Controller
              'YapilanIslem' => $brand->name." ".$model->name.' model araç satıldı'
          ]);
 
-         return back();//Sayfaya geri dönüş sağlandı.
+         return redirect()->route('product-index');//Sayfaya geri dönüş sağlandı.
     }
 
 

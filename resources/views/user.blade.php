@@ -4,7 +4,9 @@
         <div class="box box-primary">
             <div class="box-header with-border">
                 <h3 class="box-title">Kullanıcılar</h3>
-                    <a href="{{route('user-add')}}"><button class="btn btn-success">Kullanıcı Ekle</button></a>
+                <a href="{{route('user-add')}}">
+                    <button class="btn btn-success">Kullanıcı Ekle</button>
+                </a>
             </div>
             <div class="box-body">
                 @if(session()->has('status'))
@@ -39,11 +41,20 @@
                                             Yetkili
                                         @elseif($user->user_type == 1)
                                             Kullanıcı
-                                    @endif
+                                        @endif
                                     </td>
                                     <td>{{$user->email}}</td>
-                                    <td><a href="{{route('user-update',['id' => $user->id])}}"><button class="btn btn-success">Düzenle</button></a></td>
-                                    <td><a href="{{route('user-delete',['id' => $user->id])}}"><button class="btn btn-danger">Sil</button></a></td>
+                                    <td><a href="{{route('user-update',['id' => $user->id])}}">
+                                            <button class="btn btn-success">Düzenle</button>
+                                        </a></td>
+                                    <td>
+                                        <form id="user-sil-form{{$user->id}}" action="{{route('user-delete', ['id'=>$user->id])}}"
+                                              method="get">
+                                            @csrf
+                                            <button type="button" onclick="myFunction({{$user->id}})" class="btn btn-danger">Sil
+                                            </button>
+                                        </form>
+                                    </td>
                                 </tr>
                             @endforeach
                             </tbody>
@@ -60,5 +71,27 @@
 @endsection
 
 @section('js')
+    <script src="js/sweetalert2.all.min.js"></script>
+    <link rel="stylesheet" href="css/sweetalert2.min.css">
+    <script>
+        function myFunction(id) {
+            Swal.fire({
+                title: 'Dikkat!',
+                text: 'Bir Kullanıcıyı silmek üzeresiniz!',
+                icon: 'warning',
+                showCloseButton: true,
+                showCancelButton: true,
+                confirmButtonText: 'Onayla',
+                cancelButtonText: 'Vazgeç'
+
+            }).then(function (val) {
+                if (val.isConfirmed == true)
+                {
+                    document.getElementById("user-sil-form" + id).submit();
+                }
+            })
+        }
+
+    </script>
 @endsection
 

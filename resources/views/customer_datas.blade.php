@@ -3,64 +3,43 @@
     <section class="content-header">
         <div class="box box-primary">
             <div class="box-header with-border">
-                <h3 class="box-title">Satışlar</h3>
+                <h3 class="box-title">Satış Kaydı</h3>
             </div>
             <div class="box-body">
-                @if(session()->has('status'))
-                    <div class="alert alert-warning">
-                        <p>
-                            {{session('status')}}
-                        </p>
-                    </div>
-                @endif
-                <p>Satış Kayıt Formu</p>
+                <p>Satış Kayıt Bilgileri</p>
                 <a href="{{route('order')}}" style="margin-left: 5px; float: right;"><button class="btn btn-warning">Geri</button></a>
-                <form action="{{route('order-add-post')}}" method="post">
                     @csrf
                     <div class="col-md-3">
                         <div class="form-group">
                             <label>Satış Tarihi</label>
-                            <div class="input-group date" style=" ;">
-                                <div class="input-group-addon">
-                                    <i class="fa fa-calendar"></i>
-                                </div>
-                                <input autocomplete="off" type="text" class="form-control pull-right" id="datepicker" name="sold_date">
-                            </div>
+                                <input autocomplete="off" type="text" class="form-control" name="sold_date" value="{{$customer_data->sold_date}}" disabled>
                         </div>
                         <div class="form-group" style="">
                             <label for="">İsim Soyisim</label>
-                            <input type="text" class="form-control" id="price" name="full_name">
+                            <input type="text" class="form-control" id="price" name="full_name" value="{{$customer_data->full_name}}" disabled>
                         </div>
                     </div>
                     <div class="col-md-3">
                         <div class="form-group">
-                            <label>Araç</label>
-                            <select class="form-control select2" id="model" name="product_id" style="">
-                                <option selected="selected" disabled >Araç Seçiniz</option>
-                                @foreach($products as $product)
-                                <option value="{{$product->id}}">{{$product->brand_name}} {{$product->model_name}} -- {{$product->price}}₺ -- {{$product->license_plate}}</option>
-                                @endforeach
-                            </select>
+                            <label>Araç Plakası -- Fiyatı</label>
+                            <input class="form-control" id="model" name="product_id" value="{{$customer_data->license_plate}} -- {{$customer_data->price}}₺" disabled style="">
                         </div>
                         <div class="form-group">
                             <label>Açıklama</label>
-                            <textarea class="form-control" rows="3" placeholder="Açıklama ..." name="description"></textarea>
+                            <input class="form-control" value="{{$desc}}"  name="description" disabled>
                         </div>
                     </div>
                     <div class="col-md-3">
                         <div class="form-group">
                             <label>Telefon</label>
-                            <input name="phone" id="phone" class="form-control phone" type="text">
+                            <input name="phone" id="phone" class="form-control" type="text" value="{{$customer_data->phone}}" disabled>
                         </div>
                         <div class="form-group">
                             <label>Adres</label>
-                            <textarea name="address" id="address" class="form-control" rows="3" placeholder="Adres ..." > </textarea>
+                            <input name="address" id="address" class="form-control" value="{{$customer_data->address}}"  disabled>
                         </div>
                     </div>
-                    <div class="input-group-btn">
-                        <button type="submit" class="btn btn-success" style="position: absolute; top: 150px;left: 0;">Siparişi Tamamla</button>
-                    </div>
-                </form>
+
             </div>
         </div>
     </section>

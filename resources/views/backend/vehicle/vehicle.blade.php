@@ -6,6 +6,14 @@
                 <h3 class="box-title">Araç</h3>
             </div>
             <div class="box-body">
+                @if(session()->has('status'))
+                    <div class="alert alert-warning">
+                        <p>
+                            {{session('status')}}
+                        </p>
+                    </div>
+                @endif
+
                 <p>Araç Marka-Model Sayfası</p>
                 <div class="col-md-6">
                     <div class="form-group">

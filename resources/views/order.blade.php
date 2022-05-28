@@ -5,7 +5,6 @@
             <div class="box-header with-border">
                 <h3 class="box-title">Satışlar</h3>
             </div>
-            <a href="{{route('order-add')}}" class="btn btn-success">Sipariş Ekle</a>
             <div class="box-body">
                 @if(session()->has('status'))
                     <div class="alert alert-success">
@@ -38,7 +37,7 @@
                                     <td>{{$order->model_name}}</td>
                                     <td>{{$order->sold_date}}</td>
                                     <td>{{$order->credit_amount}}</td>
-                                    <td></td>
+                                    <td><a href="{{route('customer-data', $order->customer_data_id ?? 0)}}">{{$order->full_name}}</a></td>
                                     <td>{{$order->price}}</td>
                                 </tr>
                             @endforeach

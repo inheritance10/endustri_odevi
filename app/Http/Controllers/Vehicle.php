@@ -24,9 +24,14 @@ class Vehicle extends Controller
     }
 
     public function VehicleModelAddPost(Request $request){//Araç modeli eklenmesi işlemi yapıldı.
+
+
+        if (VehicleModels::where('name', $request->name)->orWhere('name', tr_strtoupper($request->name))->count() >= 1)
+            return back()->with('status', 'Bu model mevcut!');
+
         VehicleModels::create([
             'brand_id' => $request->brand_id,
-            'name' => $request->name,
+            'name' => tr_strtoupper($request->name),
             'year' => $request->year,
         ]);
 
@@ -61,8 +66,13 @@ class Vehicle extends Controller
     }
 
     public function VehicleBrandAddPost(Request $request){
+
+        if (VehicleBrands::where('name', $request->name)->orWhere('name', tr_strtoupper($request->name))->count() >= 1)
+            return back()->with('status', 'Bu marka mevcut!');
+
+
         VehicleBrands::create([//Araç markası eklenmesi işlemi yapıldı.
-            'name' => $request->name
+            'name' => tr_strtoupper($request->name)
         ]);
 
        Logs::create([//Yapılan ekleme işlemi kayıt altına alındı.

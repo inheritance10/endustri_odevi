@@ -78,6 +78,9 @@ Route::middleware(['auth'])->group(function () {
     Route::get('order-add',[OrderController::class,'OrderAdd'])
         ->name('order-add');
 
+    Route::get('customer-data/{id}',[OrderController::class,'customerDatas'])
+        ->name('customer-data');
+
     Route::post('order-add-post',[OrderController::class,'OrderAddPost'])
         ->name('order-add-post');
 

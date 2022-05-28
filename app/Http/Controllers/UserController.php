@@ -30,6 +30,13 @@ class UserController extends Controller
     }
 
     public function UserAddPost(Request $request){
+        $request->validate([
+            'name' => 'required',
+            'email' => 'required',
+            'user_type' => 'required',
+            'password' => 'required',
+        ]);
+
         User::create([
                 'name' => $request->name,
                 'email' => $request->email,

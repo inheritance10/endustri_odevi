@@ -10,7 +10,7 @@ class Orders extends Model
     use HasFactory;
 
     protected $fillable = [
-        'user_id','customer_data_id','status'
+        'user_id','customer_data_id','status', 'product_id'
     ];
 
     public function order_items()//Tablo birleştirilme işlemi yapıldı..

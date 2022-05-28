@@ -25,6 +25,8 @@ class ProductsController extends Controller
             $products = $products->withTrashed();
         }
 
+
+        //Araçları web sayfasından gelen isteğe göre filtreliyorum
         if (!empty($request->using_status)){
             $products->where('using_status', $request->using_status);
         }
@@ -35,6 +37,8 @@ class ProductsController extends Controller
             $products->where('status', $request->status);
         }
         $brands = VehicleBrands::all();
+
+        $products = $products->orderBy('status');
 
         //Listelenecek veriler çekildi.
         $products = $products->get(['products.id',
@@ -60,6 +64,7 @@ class ProductsController extends Controller
     // Araç ekleme formu
     public function ProductAdd()
     {
+
         // Listelemek üzere araç markaları da alınıyor
         $brands = VehicleBrands::all();
         return view('backend.product.product_add', compact('brands'));
@@ -134,20 +139,26 @@ class ProductsController extends Controller
 
         $product = Products::where('id', $id)->first();
 
-        $product->update([
-            'model_id' => $request->model_id,
-            'name' => $request->name,
-            'capacity' => $request->capacity,
-            'description' => $request->description,
-            'hour' => $request->hour,
-            'license' => $request->license,
-            'license_plate' => $request->license_plate,
-            'examination_date' => $request->examination_date,
-            'credit_amount' => $request->credit_amount,
-            'price' => $request->price,
-            'status' => $request->status
-        ]);
 
+        if (Auth::user()->user_type == 0) {
+            $product->update([
+                'model_id' => $request->model_id,
+                'name' => $request->name,
+                'capacity' => $request->capacity,
+                'description' => $request->description,
+                'hour' => $request->hour,
+                'license' => $request->license,
+                'license_plate' => $request->license_plate,
+                'examination_date' => $request->examination_date,
+                'credit_amount' => $request->credit_amount,
+                'price' => $request->price,
+                'status' => $request->status
+            ]);
+        }else{
+            $product->update([
+                'status' => $request->status
+            ]);
+        }
         // Yapılan işlem kayıt altına alınıyor.
         $model = VehicleModels::find($request->model_id);
         $brand = VehicleBrands::find($model->brand_id);

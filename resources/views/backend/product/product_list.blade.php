@@ -5,8 +5,9 @@
             <div class="box-header with-border">
                 <h3 class="box-title">Araçlar</h3>
                 @if($user->user_type <= 0)
-                <a href="{{route('product-add')}}"><button class="btn btn-success">Araç Ekle</button></a>
+                <a href="{{route('product-add')}}"><button class="btn btn-info">Araç Ekle</button></a>
                 @endif
+                <a href="{{route('order-add')}}" class="btn btn-success">Satış Ekle</a>
             </div>
             <div class="box-body">
                 @if(session()->has('status'))
@@ -18,7 +19,7 @@
                 @endif
                     <form  action="{{route('product-index')}}">
                 <div class="row">
-                    <div class="col-md-1">
+                    <div class="col-md-2">
                     <div class="form-group">
                         <label>Kullanım Durumu</label>
                         <select class="form-control select2" name="using_status" style=" ;">
@@ -97,7 +98,7 @@
                                 <td>{{$product->price}}</td>
                                 <td>@if($product->using_status == 1)Yeni @else 2. El @endif</td>
                                 <td>@if($product->status == 1) Mevcut @elseif($product->status == 2) Satıldı @else Opsiyonlandı @endif</td>
-                                @if($user->user_type <= 0)<td><a href="{{route('product-update',['id' => $product->id])}}"><button class="btn btn-success">Düzenle</button></a></td>@endif
+                                @if(($user->user_type == 1 && $product->status != 2) || $user->user_type == 0)<td><a href="{{route('product-update',['id' => $product->id])}}"><button class="btn btn-success">Düzenle</button></a></td>@endif
                                 @if($user->user_type <= 0)<td>@if(!$product->trashed())<a href="{{route('product-delete',['id' => $product->id])}}"><button class="btn btn-danger">Sil</button></a>@else <a href="{{route('product-restore',['id' => $product->id])}}"><button class="btn btn-info">Geri Yükle</button></a> @endif</td>@endif
                             </tr>
                             @endforeach
